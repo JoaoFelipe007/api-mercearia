@@ -19,6 +19,13 @@ func NewCategoryControler(usecase usecase.CategoryUsecase) categoryController {
 	}
 }
 
+// GetCategories godoc
+// @Summary Lista todas as categorias
+// @Description Retorna todas as categorias disponíveis no sistema.
+// @Tags Categorias
+// @Produce json
+// @Success 200 {array} model.Category
+// @Router /categories [get]
 func (c *categoryController) GetCategories(ctx *gin.Context) {
 
 	categories, err := c.categoryUsecase.GetCategories()
@@ -36,7 +43,6 @@ func (c *categoryController) GetCategoryById(ctx *gin.Context) {
 	if idStr == "" {
 		response := model.Response{Message: "O id não pode ser nulo"}
 		ctx.JSON(http.StatusBadRequest, response)
-		return
 	}
 
 	id, err := strconv.Atoi(idStr)
