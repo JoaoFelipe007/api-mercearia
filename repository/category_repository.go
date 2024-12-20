@@ -47,3 +47,59 @@ func (pr *CategoryRepository) GetCategories() ([]model.Category, error) { // O q
 
 	return categoryList, err
 }
+
+func (cr *CategoryRepository) CreateCategory(category model.Category) (int, error) {
+
+	var id int
+
+	query, err := cr.connection.Prepare("INSERT INTO category " +
+		"(description, priority) " +
+		"VALUES ($1,$2) returning id")
+
+	if err != nil {
+		fmt.Print(err)
+		return 0, err
+	}
+
+	err = query.QueryRow(category.Description, category.Priority).Scan(&id)
+
+	if err != nil {
+		fmt.Print(err)
+		return 0, err
+	}
+
+	query.Close()
+	return id, nil
+}
+
+func (cr *CategoryRepository) DeleteCategoty(id int) (string, error) {
+
+	query, err := cr.connection.Prepare("delete from category where id = $1")
+
+	if err != nil {
+		fmt.Print(err)
+		return "", err
+	}
+
+	defer query.Close()
+
+	result, err := query.Exec(id)
+
+	if err != nil {
+		fmt.Print(err)
+		return "", err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+
+	if err != nil {
+		fmt.Print(err)
+		return "", err
+	}
+
+	if rowsAffected == 0 {
+		return "", fmt.Errorf("nenhuma linha foi deletada")
+	}
+
+	return "Delatado com sucesso", nil
+}

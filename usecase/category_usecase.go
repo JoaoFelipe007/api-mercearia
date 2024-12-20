@@ -3,6 +3,7 @@ package usecase
 import (
 	"api-mercearia-go/model"
 	"api-mercearia-go/repository"
+	"fmt"
 )
 
 type CategoryUsecase struct {
@@ -17,4 +18,29 @@ func NewCategoryUsecase(categoryRepository repository.CategoryRepository) Catego
 
 func (cu *CategoryUsecase) GetCategories() ([]model.Category, error) {
 	return cu.categoryRepository.GetCategories()
+}
+
+func (cu *CategoryUsecase) CreateCategory(category model.Category) (model.Category, error) {
+
+	categoryId, err := cu.categoryRepository.CreateCategory(category)
+
+	if err != nil {
+		fmt.Print(err)
+		return model.Category{}, err
+	}
+	category.ID = categoryId
+	return category, nil
+}
+
+func (cu *CategoryUsecase) DeleteCategoty(id int) (string, error) {
+
+	messageSucces, err := cu.categoryRepository.DeleteCategoty(id)
+
+	if err != nil {
+		fmt.Print(err)
+		return "", err
+	}
+
+	return messageSucces, nil
+
 }
