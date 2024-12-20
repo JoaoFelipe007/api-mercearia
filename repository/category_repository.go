@@ -48,6 +48,23 @@ func (pr *CategoryRepository) GetCategories() ([]model.Category, error) { // O q
 	return categoryList, err
 }
 
+func (cr *CategoryRepository) GetCategoryById(id int) (model.Category, error) {
+	query := "SELECT id, description, priority FROM category WHERE id = $1"
+	db := cr.connection
+	defer db.Close() // Garante que a conexão será fechada ao final da função
+
+	var category model.Category
+
+	err := db.QueryRow(query, id).Scan(&category.ID, &category.Description, &category.Priority)
+
+	if err != nil {
+		fmt.Print(err)
+		return model.Category{}, err
+	}
+
+	return category, err
+}
+
 func (cr *CategoryRepository) CreateCategory(category model.Category) (int, error) {
 
 	var id int

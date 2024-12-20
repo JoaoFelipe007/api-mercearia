@@ -29,8 +29,9 @@ func main() {
 	CategoryControler := controller.NewCategoryControler(CategoryUsecase)
 
 	router.GET("/categories", CategoryControler.GetCategories)
+	router.GET("/category/:id", CategoryControler.GetCategoryById)
 	router.POST("/category", CategoryControler.CreateCategory)
-	router.DELETE("/category/:id", CategoryControler.DeleteCategoty)
+	router.DELETE("/category/:id", CategoryControler.DeleteCategory)
 
 	router.Run("localhost:8080")
 }

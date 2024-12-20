@@ -20,6 +20,18 @@ func (cu *CategoryUsecase) GetCategories() ([]model.Category, error) {
 	return cu.categoryRepository.GetCategories()
 }
 
+func (cu *CategoryUsecase) GetCategoryById(id int) (model.Category, error) {
+
+	category, err := cu.categoryRepository.GetCategoryById(id)
+
+	if err != nil {
+		fmt.Print(err)
+		return model.Category{}, err
+	}
+
+	return category, nil
+}
+
 func (cu *CategoryUsecase) CreateCategory(category model.Category) (model.Category, error) {
 
 	categoryId, err := cu.categoryRepository.CreateCategory(category)
@@ -32,7 +44,7 @@ func (cu *CategoryUsecase) CreateCategory(category model.Category) (model.Catego
 	return category, nil
 }
 
-func (cu *CategoryUsecase) DeleteCategoty(id int) (string, error) {
+func (cu *CategoryUsecase) DeleteCategory(id int) (string, error) {
 
 	messageSucces, err := cu.categoryRepository.DeleteCategoty(id)
 

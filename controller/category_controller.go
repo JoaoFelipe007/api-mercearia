@@ -29,6 +29,24 @@ func (c *categoryController) GetCategories(ctx *gin.Context) {
 
 }
 
+func (c *categoryController) GetCategoryById(ctx *gin.Context) {
+
+	idStr := ctx.Param("id") // Obtem o valor do parâmetro como string
+	id, err := strconv.Atoi(idStr)
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	category, err := c.categoryUsecase.GetCategoryById(id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err)
+	}
+	ctx.JSON(http.StatusOK, category)
+
+}
+
 func (c *categoryController) CreateCategory(ctx *gin.Context) {
 	var category model.Category
 	err := ctx.BindJSON(&category)
@@ -48,7 +66,7 @@ func (c *categoryController) CreateCategory(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, insertCategory)
 }
 
-func (c *categoryController) DeleteCategoty(ctx *gin.Context) {
+func (c *categoryController) DeleteCategory(ctx *gin.Context) {
 	var idCategory int
 
 	idStr := ctx.Param("id") // Obtem o valor do parâmetro como string
@@ -61,7 +79,7 @@ func (c *categoryController) DeleteCategoty(ctx *gin.Context) {
 
 	idCategory = id
 
-	messageSucces, err := c.categoryUsecase.DeleteCategoty(idCategory)
+	messageSucces, err := c.categoryUsecase.DeleteCategory(idCategory)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
