@@ -32,6 +32,13 @@ func (c *categoryController) GetCategories(ctx *gin.Context) {
 func (c *categoryController) GetCategoryById(ctx *gin.Context) {
 
 	idStr := ctx.Param("id") // Obtem o valor do parâmetro como string
+
+	if idStr == "" {
+		response := model.Response{Message: "O id não pode ser nulo"}
+		ctx.JSON(http.StatusBadRequest, response)
+		return
+	}
+
 	id, err := strconv.Atoi(idStr)
 
 	if err != nil {

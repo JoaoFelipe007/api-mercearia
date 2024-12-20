@@ -49,7 +49,7 @@ func (pr *CategoryRepository) GetCategories() ([]model.Category, error) { // O q
 }
 
 func (cr *CategoryRepository) GetCategoryById(id int) (model.Category, error) {
-	query := "SELECT id, description, priority FROM category WHERE id = $1"
+	query := "SELECT * FROM category WHERE id = $1"
 	db := cr.connection
 	defer db.Close() // Garante que a conexão será fechada ao final da função
 
@@ -58,10 +58,11 @@ func (cr *CategoryRepository) GetCategoryById(id int) (model.Category, error) {
 	err := db.QueryRow(query, id).Scan(&category.ID, &category.Description, &category.Priority)
 
 	if err != nil {
-		fmt.Print(err)
+		if err == sql.ErrNoRows { //nenhuma liha encontrada
+			return model.Category{}, nil
+		}
 		return model.Category{}, err
 	}
-
 	return category, err
 }
 

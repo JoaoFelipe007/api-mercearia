@@ -9,6 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @title API MERCEARIA
+// @version 1.0
+// @description This is a RESTful API in Go using Swagger
+// @contact.name João FElipe
+// @joaofelipe.developer@gmail.com
+// @host localhost:8080
+// @BasePath /v1
 func main() {
 	router := gin.Default()
 
