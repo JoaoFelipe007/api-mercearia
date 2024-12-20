@@ -9,7 +9,7 @@ Esta API foi desenvolvida utilizando o framework **Gin** e conta com um banco de
 - **Gin**: Framework para simplificar o desenvolvimento web.
 - **Docker**: Utilizado para rodar uma imagem do PostgreSQL.
 - **PostgreSQL**: Banco de dados relacional.
-
+- **Swagger**: Documentação da api.
 
 ## Objetivo
 
