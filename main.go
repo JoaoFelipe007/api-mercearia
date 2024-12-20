@@ -39,10 +39,10 @@ func main() {
 	CategoryControler := controller.NewCategoryControler(CategoryUsecase)
 
 	// Definindo as rotas
-	router.GET("/categories", CategoryControler.GetCategories)       // Rota para pegar todas as categorias
-	router.GET("/category/:id", CategoryControler.GetCategoryById)   // Rota para pegar categoria por ID
-	router.POST("/category", CategoryControler.CreateCategory)       // Rota para criar nova categoria
-	router.DELETE("/category/:id", CategoryControler.DeleteCategory) // Rota para excluir categoria por ID
+	router.GET("/categories", CategoryControler.GetCategories)
+	router.GET("/category/:id", CategoryControler.GetCategoryById)
+	router.POST("/category", CategoryControler.CreateCategory)
+	router.DELETE("/category/:id", CategoryControler.DeleteCategory)
 
 	// Rodando o servidor na porta 8080
 	router.Run(":8080")

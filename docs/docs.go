@@ -24,7 +24,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Categorias"
+                    "Category"
                 ],
                 "summary": "Lista todas as categorias",
                 "responses": {
@@ -35,6 +35,93 @@ const docTemplate = `{
                             "items": {
                                 "$ref": "#/definitions/model.Category"
                             }
+                        }
+                    }
+                }
+            }
+        },
+        "/category": {
+            "post": {
+                "description": "Cria uma nova categoria",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Cria uma nova categoria",
+                "parameters": [
+                    {
+                        "description": "Dados da nova categoria",
+                        "name": "category",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Category"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Category"
+                        }
+                    }
+                }
+            }
+        },
+        "/category/{id}": {
+            "get": {
+                "description": "Retorna a categoria informada",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Lista a categoria pelo id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID of Category",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Category"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Exlcui a categoria informada",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Deleta uma categoria",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID da Categoria",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delatado com sucesso",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }

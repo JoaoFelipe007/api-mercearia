@@ -22,7 +22,7 @@ func NewCategoryControler(usecase usecase.CategoryUsecase) categoryController {
 // GetCategories godoc
 // @Summary Lista todas as categorias
 // @Description Retorna todas as categorias disponíveis no sistema.
-// @Tags Categorias
+// @Tags Category
 // @Produce json
 // @Success 200 {array} model.Category
 // @Router /categories [get]
@@ -36,6 +36,14 @@ func (c *categoryController) GetCategories(ctx *gin.Context) {
 
 }
 
+// GetCategoryById godoc
+// @Summary Lista a categoria pelo id
+// @Description Retorna a categoria informada
+// @Tags Category
+// @Produce json
+// @Param id path int true "ID of Category"
+// @Success 200 {object} model.Category
+// @Router /category/{id} [get]
 func (c *categoryController) GetCategoryById(ctx *gin.Context) {
 
 	idStr := ctx.Param("id") // Obtem o valor do parâmetro como string
@@ -60,6 +68,14 @@ func (c *categoryController) GetCategoryById(ctx *gin.Context) {
 
 }
 
+// CreateCategory
+// @Summary Cria uma nova categoria
+// @Description Cria uma nova categoria
+// @Tags Category
+// @Produce json
+// @Param category body model.Category true "Dados da nova categoria"
+// @Success 200 {object} model.Category
+// @Router /category [post]
 func (c *categoryController) CreateCategory(ctx *gin.Context) {
 	var category model.Category
 	err := ctx.BindJSON(&category)
@@ -79,6 +95,14 @@ func (c *categoryController) CreateCategory(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, insertCategory)
 }
 
+// DeleteCategory godoc
+// @Summary Deleta uma categoria
+// @Description Exlcui a categoria informada
+// @Tags Category
+// @Produce json
+// @Param id path int true "ID da Categoria"
+// @Success 200 {string} string "Delatado com sucesso"
+// @Router /category/{id} [delete]
 func (c *categoryController) DeleteCategory(ctx *gin.Context) {
 	var idCategory int
 

@@ -99,8 +99,6 @@ func (cr *CategoryRepository) DeleteCategoty(id int) (string, error) {
 		return "", err
 	}
 
-	defer query.Close()
-
 	result, err := query.Exec(id)
 
 	if err != nil {
@@ -118,6 +116,7 @@ func (cr *CategoryRepository) DeleteCategoty(id int) (string, error) {
 	if rowsAffected == 0 {
 		return "", fmt.Errorf("nenhuma linha foi deletada")
 	}
+	query.Close()
 
 	return "Delatado com sucesso", nil
 }

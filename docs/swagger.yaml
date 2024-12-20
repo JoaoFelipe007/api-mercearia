@@ -31,5 +31,62 @@ paths:
             type: array
       summary: Lista todas as categorias
       tags:
-      - Categorias
+      - Category
+  /category:
+    post:
+      description: Cria uma nova categoria
+      parameters:
+      - description: Dados da nova categoria
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/model.Category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Category'
+      summary: Cria uma nova categoria
+      tags:
+      - Category
+  /category/{id}:
+    delete:
+      description: Exlcui a categoria informada
+      parameters:
+      - description: ID da Categoria
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delatado com sucesso
+          schema:
+            type: string
+      summary: Deleta uma categoria
+      tags:
+      - Category
+    get:
+      description: Retorna a categoria informada
+      parameters:
+      - description: ID of Category
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Category'
+      summary: Lista a categoria pelo id
+      tags:
+      - Category
 swagger: "2.0"
