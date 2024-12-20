@@ -34,14 +34,13 @@ func (cu *CategoryUsecase) GetCategoryById(id int) (model.Category, error) {
 
 func (cu *CategoryUsecase) CreateCategory(category model.Category) (model.Category, error) {
 
-	categoryId, err := cu.categoryRepository.CreateCategory(category)
+	categoryResult, err := cu.categoryRepository.CreateCategory(category)
 
 	if err != nil {
 		fmt.Print(err)
 		return model.Category{}, err
 	}
-	category.ID = categoryId
-	return category, nil
+	return categoryResult, nil
 }
 
 func (cu *CategoryUsecase) ChangeStatus(id int) (model.Category, error) {

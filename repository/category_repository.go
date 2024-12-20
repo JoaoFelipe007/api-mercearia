@@ -66,28 +66,28 @@ func (cr *CategoryRepository) GetCategoryById(id int) (model.Category, error) {
 	return category, err
 }
 
-func (cr *CategoryRepository) CreateCategory(category model.Category) (int, error) {
+func (cr *CategoryRepository) CreateCategory(category model.Category) (model.Category, error) {
 
-	var id int
+	var categoryResult model.Category
 
-	query, err := cr.connection.Prepare("INSERT INTO category " +
-		"(description, priority) " +
-		"VALUES ($1,$2) returning id")
+	query, err := cr.connection.Prepare("INSERT INTO category (description, priority) " +
+		"VALUES ($1,$2) returning *")
 
 	if err != nil {
 		fmt.Print(err)
-		return 0, err
+		return model.Category{}, err
 	}
 
-	err = query.QueryRow(category.Description, category.Priority).Scan(&id)
+	err = query.QueryRow(category.Description, category.Priority).Scan(&categoryResult.ID, &categoryResult.Description,
+		&categoryResult.Priority, &categoryResult.Status)
 
 	if err != nil {
 		fmt.Print(err)
-		return 0, err
+		return model.Category{}, err
 	}
 
 	query.Close()
-	return id, nil
+	return categoryResult, nil
 }
 
 func (cr *CategoryRepository) ChangeStatus(id int) (model.Category, error) {
