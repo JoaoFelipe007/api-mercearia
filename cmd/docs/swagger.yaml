@@ -1,0 +1,10 @@
+basePath: /v1
+host: localhost:8080
+info:
+  contact:
+    name: João FElipe
+  description: This is a RESTful API in Go using Swagger
+  title: API MERCEARIA
+  version: "1.0"
+paths: {}
+swagger: "2.0"
