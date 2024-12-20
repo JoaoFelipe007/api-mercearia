@@ -14,12 +14,12 @@ info:
   contact:
     name: João FElipe
   description: This is a RESTful API in Go using Swagger
-  title: API MERCEARIA
+  title: GROCERY API
   version: "1.0"
 paths:
   /categories:
     get:
-      description: Retorna todas as categorias disponíveis no sistema.
+      description: Returns all categories available in the system.
       produces:
       - application/json
       responses:
@@ -29,12 +29,12 @@ paths:
             items:
               $ref: '#/definitions/model.Category'
             type: array
-      summary: Lista todas as categorias
+      summary: List all categories
       tags:
       - Category
   /category:
     post:
-      description: Cria uma nova categoria
+      description: Create a new category
       parameters:
       - description: Dados da nova categoria
         in: body
@@ -49,12 +49,12 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/model.Category'
-      summary: Cria uma nova categoria
+      summary: Create a new category
       tags:
       - Category
   /category/{id}:
     delete:
-      description: Exlcui a categoria informada
+      description: Deletes the specified category
       parameters:
       - description: ID da Categoria
         in: path
@@ -68,11 +68,11 @@ paths:
           description: Delatado com sucesso
           schema:
             type: string
-      summary: Deleta uma categoria
+      summary: Delete a category
       tags:
       - Category
     get:
-      description: Retorna a categoria informada
+      description: Returns the specified category
       parameters:
       - description: ID of Category
         in: path
@@ -86,7 +86,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/model.Category'
-      summary: Lista a categoria pelo id
+      summary: List the category by id
       tags:
       - Category
 swagger: "2.0"

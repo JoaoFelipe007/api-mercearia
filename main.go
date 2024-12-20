@@ -13,7 +13,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title API MERCEARIA
+// @title GROCERY API
 // @version 1.0
 // @description This is a RESTful API in Go using Swagger
 // @contact.name João FElipe

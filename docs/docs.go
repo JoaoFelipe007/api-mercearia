@@ -19,14 +19,14 @@ const docTemplate = `{
     "paths": {
         "/categories": {
             "get": {
-                "description": "Retorna todas as categorias disponíveis no sistema.",
+                "description": "Returns all categories available in the system.",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "Category"
                 ],
-                "summary": "Lista todas as categorias",
+                "summary": "List all categories",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -42,14 +42,14 @@ const docTemplate = `{
         },
         "/category": {
             "post": {
-                "description": "Cria uma nova categoria",
+                "description": "Create a new category",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "Category"
                 ],
-                "summary": "Cria uma nova categoria",
+                "summary": "Create a new category",
                 "parameters": [
                     {
                         "description": "Dados da nova categoria",
@@ -73,14 +73,14 @@ const docTemplate = `{
         },
         "/category/{id}": {
             "get": {
-                "description": "Retorna a categoria informada",
+                "description": "Returns the specified category",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "Category"
                 ],
-                "summary": "Lista a categoria pelo id",
+                "summary": "List the category by id",
                 "parameters": [
                     {
                         "type": "integer",
@@ -100,14 +100,14 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Exlcui a categoria informada",
+                "description": "Deletes the specified category",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "Category"
                 ],
-                "summary": "Deleta uma categoria",
+                "summary": "Delete a category",
                 "parameters": [
                     {
                         "type": "integer",
@@ -152,7 +152,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "API MERCEARIA",
+	Title:            "GROCERY API",
 	Description:      "This is a RESTful API in Go using Swagger",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

@@ -20,8 +20,8 @@ func NewCategoryControler(usecase usecase.CategoryUsecase) categoryController {
 }
 
 // GetCategories godoc
-// @Summary Lista todas as categorias
-// @Description Retorna todas as categorias disponíveis no sistema.
+// @Summary List all categories
+// @Description Returns all categories available in the system.
 // @Tags Category
 // @Produce json
 // @Success 200 {array} model.Category
@@ -37,8 +37,8 @@ func (c *categoryController) GetCategories(ctx *gin.Context) {
 }
 
 // GetCategoryById godoc
-// @Summary Lista a categoria pelo id
-// @Description Retorna a categoria informada
+// @Summary List the category by id
+// @Description Returns the specified category
 // @Tags Category
 // @Produce json
 // @Param id path int true "ID of Category"
@@ -69,8 +69,8 @@ func (c *categoryController) GetCategoryById(ctx *gin.Context) {
 }
 
 // CreateCategory
-// @Summary Cria uma nova categoria
-// @Description Cria uma nova categoria
+// @Summary Create a new category
+// @Description Create a new category
 // @Tags Category
 // @Produce json
 // @Param category body model.Category true "Dados da nova categoria"
@@ -96,8 +96,8 @@ func (c *categoryController) CreateCategory(ctx *gin.Context) {
 }
 
 // DeleteCategory godoc
-// @Summary Deleta uma categoria
-// @Description Exlcui a categoria informada
+// @Summary Delete a category
+// @Description Deletes the specified category
 // @Tags Category
 // @Produce json
 // @Param id path int true "ID da Categoria"
