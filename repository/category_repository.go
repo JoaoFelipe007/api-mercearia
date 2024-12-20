@@ -90,6 +90,29 @@ func (cr *CategoryRepository) CreateCategory(category model.Category) (int, erro
 	return id, nil
 }
 
+func (cr *CategoryRepository) ChangeStatus(id int) (model.Category, error) {
+
+	var category model.Category
+
+	query, err := cr.connection.Prepare("update category set status = not status where id = $1 returning *")
+
+	if err != nil {
+		fmt.Print(err)
+		return model.Category{}, err
+	}
+
+	err = query.QueryRow(id).Scan(&category.ID, &category.Description, &category.Priority, &category.Status)
+
+	if err != nil {
+		fmt.Print(err)
+		return model.Category{}, err
+	}
+
+	query.Close()
+	return category, nil
+
+}
+
 func (cr *CategoryRepository) DeleteCategoty(id int) (string, error) {
 
 	query, err := cr.connection.Prepare("delete from category where id = $1")

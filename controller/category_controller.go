@@ -9,12 +9,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type categoryController struct {
+type CategoryController struct {
 	categoryUsecase usecase.CategoryUsecase
 }
 
-func NewCategoryControler(usecase usecase.CategoryUsecase) categoryController {
-	return categoryController{
+func NewCategoryControler(usecase usecase.CategoryUsecase) CategoryController {
+	return CategoryController{
 		categoryUsecase: usecase,
 	}
 }
@@ -26,7 +26,7 @@ func NewCategoryControler(usecase usecase.CategoryUsecase) categoryController {
 // @Produce json
 // @Success 200 {array} model.Category
 // @Router /categories [get]
-func (c *categoryController) GetCategories(ctx *gin.Context) {
+func (c *CategoryController) GetCategories(ctx *gin.Context) {
 
 	categories, err := c.categoryUsecase.GetCategories()
 	if err != nil {
@@ -44,7 +44,7 @@ func (c *categoryController) GetCategories(ctx *gin.Context) {
 // @Param id path int true "ID of Category"
 // @Success 200 {object} model.Category
 // @Router /category/{id} [get]
-func (c *categoryController) GetCategoryById(ctx *gin.Context) {
+func (c *CategoryController) GetCategoryById(ctx *gin.Context) {
 
 	idStr := ctx.Param("id") // Obtem o valor do parâmetro como string
 
@@ -76,7 +76,7 @@ func (c *categoryController) GetCategoryById(ctx *gin.Context) {
 // @Param category body model.Category true "Dados da nova categoria"
 // @Success 200 {object} model.Category
 // @Router /category [post]
-func (c *categoryController) CreateCategory(ctx *gin.Context) {
+func (c *CategoryController) CreateCategory(ctx *gin.Context) {
 	var category model.Category
 	err := ctx.BindJSON(&category)
 
@@ -95,6 +95,39 @@ func (c *categoryController) CreateCategory(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, insertCategory)
 }
 
+// ChangeStatus godoc
+// @Summary Change the status of a category
+// @Description Change the status of a category
+// @Tags Category
+// @Produce json
+// @Param id path int true "ID da Categoria"
+// @Success 200 {object} model.Category
+// @Router /category/change-status/{id} [put]
+func (c *CategoryController) ChangeStatus(ctx *gin.Context) {
+	idString := ctx.Param("id")
+	if idString == "" {
+		reponse := model.Response{Message: "O id não pode ser nulo!"}
+		ctx.JSON(http.StatusBadRequest, reponse)
+		return
+	}
+	id, err := strconv.Atoi(idString)
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	category, err := c.categoryUsecase.ChangeStatus(id)
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, category)
+
+}
+
 // DeleteCategory godoc
 // @Summary Delete a category
 // @Description Deletes the specified category
@@ -103,7 +136,7 @@ func (c *categoryController) CreateCategory(ctx *gin.Context) {
 // @Param id path int true "ID da Categoria"
 // @Success 200 {string} string "Delatado com sucesso"
 // @Router /category/{id} [delete]
-func (c *categoryController) DeleteCategory(ctx *gin.Context) {
+func (c *CategoryController) DeleteCategory(ctx *gin.Context) {
 	var idCategory int
 
 	idStr := ctx.Param("id") // Obtem o valor do parâmetro como string

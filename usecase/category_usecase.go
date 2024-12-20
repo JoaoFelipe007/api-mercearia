@@ -44,6 +44,17 @@ func (cu *CategoryUsecase) CreateCategory(category model.Category) (model.Catego
 	return category, nil
 }
 
+func (cu *CategoryUsecase) ChangeStatus(id int) (model.Category, error) {
+	category, err := cu.categoryRepository.ChangeStatus(id)
+
+	if err != nil {
+		fmt.Print(err)
+		return model.Category{}, err
+	}
+
+	return category, nil
+}
+
 func (cu *CategoryUsecase) DeleteCategory(id int) (string, error) {
 
 	messageSucces, err := cu.categoryRepository.DeleteCategoty(id)

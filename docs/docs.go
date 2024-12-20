@@ -10,7 +10,7 @@ const docTemplate = `{
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
         "contact": {
-            "name": "João FElipe"
+            "name": "João Felipe"
         },
         "version": "{{.Version}}"
     },
@@ -59,6 +59,35 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/model.Category"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Category"
+                        }
+                    }
+                }
+            }
+        },
+        "/category/change-status/{id}": {
+            "put": {
+                "description": "Change the status of a category",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Change the status of a category",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID da Categoria",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -140,6 +169,9 @@ const docTemplate = `{
                 },
                 "priority": {
                     "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
                 }
             }
         }

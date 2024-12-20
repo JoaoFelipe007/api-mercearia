@@ -8,11 +8,13 @@ definitions:
         type: integer
       priority:
         type: integer
+      status:
+        type: boolean
     type: object
 host: localhost:8080
 info:
   contact:
-    name: João FElipe
+    name: João Felipe
   description: This is a RESTful API in Go using Swagger
   title: GROCERY API
   version: "1.0"
@@ -87,6 +89,25 @@ paths:
           schema:
             $ref: '#/definitions/model.Category'
       summary: List the category by id
+      tags:
+      - Category
+  /category/change-status/{id}:
+    put:
+      description: Change the status of a category
+      parameters:
+      - description: ID da Categoria
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Category'
+      summary: Change the status of a category
       tags:
       - Category
 swagger: "2.0"

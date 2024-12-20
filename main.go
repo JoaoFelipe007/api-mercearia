@@ -16,7 +16,7 @@ import (
 // @title GROCERY API
 // @version 1.0
 // @description This is a RESTful API in Go using Swagger
-// @contact.name João FElipe
+// @contact.name João Felipe
 // @joaofelipe.developer@gmail.com
 // @host localhost:8080
 // @BasePath /
@@ -43,6 +43,7 @@ func main() {
 	router.GET("/category/:id", CategoryControler.GetCategoryById)
 	router.POST("/category", CategoryControler.CreateCategory)
 	router.DELETE("/category/:id", CategoryControler.DeleteCategory)
+	router.PUT("/category/change-status/:id", CategoryControler.ChangeStatus)
 
 	// Rodando o servidor na porta 8080
 	router.Run(":8080")

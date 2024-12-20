@@ -4,7 +4,7 @@
         "description": "This is a RESTful API in Go using Swagger",
         "title": "GROCERY API",
         "contact": {
-            "name": "João FElipe"
+            "name": "João Felipe"
         },
         "version": "1.0"
     },
@@ -53,6 +53,35 @@
                         "schema": {
                             "$ref": "#/definitions/model.Category"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Category"
+                        }
+                    }
+                }
+            }
+        },
+        "/category/change-status/{id}": {
+            "put": {
+                "description": "Change the status of a category",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Change the status of a category",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID da Categoria",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -134,6 +163,9 @@
                 },
                 "priority": {
                     "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
                 }
             }
         }
