@@ -157,6 +157,41 @@ const docTemplate = `{
             }
         },
         "/product": {
+            "put": {
+                "description": "Save a product",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Save a product",
+                "parameters": [
+                    {
+                        "description": "Dados do produto existente",
+                        "name": "category",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Product"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Product"
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação nos dados",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Save a product",
                 "produces": [
@@ -188,6 +223,68 @@ const docTemplate = `{
                         "description": "Erro de validação nos dados",
                         "schema": {
                             "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/{id}": {
+            "get": {
+                "description": "Returns the specified product",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "list product by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID of Product",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Product"
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação nos dados",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes the specified product",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete a product",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID of product",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delatado com sucesso",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -260,6 +357,7 @@ const docTemplate = `{
                     "type": "number"
                 },
                 "registrationDate": {
+                    "description": "o * permite vim nulo",
                     "type": "string"
                 },
                 "status": {

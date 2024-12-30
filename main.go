@@ -51,7 +51,9 @@ func main() {
 
 	router.GET("/products", ProductController.GetProducts)
 	router.POST("/product", ProductController.CreateProduct)
-
+	router.GET("/product/:id", ProductController.GetProductById)
+	router.PUT("/product", ProductController.ChangeProduct)
+	router.DELETE("/product/:id", ProductController.DeleteProduct)
 	// Rodando o servidor na porta 8080
 	router.Run(":8080")
 }

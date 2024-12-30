@@ -28,6 +28,7 @@ definitions:
       quantity:
         type: number
       registrationDate:
+        description: o * permite vim nulo
         type: string
       status:
         type: boolean
@@ -158,6 +159,70 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: Save a product
+      tags:
+      - Product
+    put:
+      description: Save a product
+      parameters:
+      - description: Dados do produto existente
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/model.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Product'
+        "400":
+          description: Erro de validação nos dados
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Save a product
+      tags:
+      - Product
+  /product/{id}:
+    delete:
+      description: Deletes the specified product
+      parameters:
+      - description: ID of product
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delatado com sucesso
+          schema:
+            type: string
+      summary: Delete a product
+      tags:
+      - Product
+    get:
+      description: Returns the specified product
+      parameters:
+      - description: ID of Product
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Product'
+        "400":
+          description: Erro de validação nos dados
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: list product by id
       tags:
       - Product
   /products:
