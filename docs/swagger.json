@@ -150,6 +150,43 @@
                 }
             }
         },
+        "/person": {
+            "post": {
+                "description": "Save a person",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Person"
+                ],
+                "summary": "Save a person",
+                "parameters": [
+                    {
+                        "description": "Dados do novo usuario",
+                        "name": "category",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Person"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Person"
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação nos dados",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/product": {
             "put": {
                 "description": "Save a product",
@@ -326,6 +363,39 @@
                 }
             }
         },
+        "model.Person": {
+            "type": "object",
+            "properties": {
+                "dateChange": {
+                    "description": "o * permite vim nulo",
+                    "type": "string"
+                },
+                "document": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isAPhysicalPerson": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "registrationDate": {
+                    "type": "string"
+                },
+                "userType": {
+                    "$ref": "#/definitions/model.UserType"
+                }
+            }
+        },
         "model.Product": {
             "type": "object",
             "properties": {
@@ -366,6 +436,19 @@
                     "type": "string"
                 }
             }
+        },
+        "model.UserType": {
+            "type": "integer",
+            "enum": [
+                0,
+                1,
+                2
+            ],
+            "x-enum-varnames": [
+                "Admin",
+                "Manager",
+                "Employee"
+            ]
         }
     }
 }

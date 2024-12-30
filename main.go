@@ -42,6 +42,10 @@ func main() {
 	ProductUseCase := usecase.NewProductUsecase(ProductRepository)
 	ProductController := controller.NewProductController(ProductUseCase)
 
+	PersonRepository := repository.NewPersonRepository(dbConnection)
+	PersonUseCase := usecase.NewPersonUsecase(PersonRepository)
+	PersonController := controller.NewPersonController(PersonUseCase)
+
 	// Definindo as rotas
 	router.GET("/categories", CategoryControler.GetCategories)
 	router.GET("/category/:id", CategoryControler.GetCategoryById)
@@ -54,6 +58,9 @@ func main() {
 	router.GET("/product/:id", ProductController.GetProductById)
 	router.PUT("/product", ProductController.ChangeProduct)
 	router.DELETE("/product/:id", ProductController.DeleteProduct)
+
+	router.POST("/person", PersonController.CreatePerson)
+
 	// Rodando o servidor na porta 8080
 	router.Run(":8080")
 }

@@ -11,6 +11,28 @@ definitions:
       status:
         type: boolean
     type: object
+  model.Person:
+    properties:
+      dateChange:
+        description: o * permite vim nulo
+        type: string
+      document:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      isAPhysicalPerson:
+        type: boolean
+      name:
+        type: string
+      password:
+        type: string
+      registrationDate:
+        type: string
+      userType:
+        $ref: '#/definitions/model.UserType'
+    type: object
   model.Product:
     properties:
       categoryId:
@@ -38,6 +60,16 @@ definitions:
       message:
         type: string
     type: object
+  model.UserType:
+    enum:
+    - 0
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - Admin
+    - Manager
+    - Employee
 host: localhost:8080
 info:
   contact:
@@ -137,6 +169,30 @@ paths:
       summary: Change the status of a category
       tags:
       - Category
+  /person:
+    post:
+      description: Save a person
+      parameters:
+      - description: Dados do novo usuario
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/model.Person'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Person'
+        "400":
+          description: Erro de validação nos dados
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Save a person
+      tags:
+      - Person
   /product:
     post:
       description: Save a product
