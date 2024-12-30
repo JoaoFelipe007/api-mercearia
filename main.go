@@ -38,12 +38,19 @@ func main() {
 	CategoryUsecase := usecase.NewCategoryUsecase(CategoryRepository)
 	CategoryControler := controller.NewCategoryControler(CategoryUsecase)
 
+	ProductRepository := repository.NewProductRepository(dbConnection)
+	ProductUseCase := usecase.NewProductUsecase(ProductRepository)
+	ProductController := controller.NewProductController(ProductUseCase)
+
 	// Definindo as rotas
 	router.GET("/categories", CategoryControler.GetCategories)
 	router.GET("/category/:id", CategoryControler.GetCategoryById)
 	router.POST("/category", CategoryControler.CreateCategory)
 	router.DELETE("/category/:id", CategoryControler.DeleteCategory)
 	router.PUT("/category/change-status/:id", CategoryControler.ChangeStatus)
+
+	router.GET("/products", ProductController.GetProducts)
+	router.POST("/product", ProductController.CreateProduct)
 
 	// Rodando o servidor na porta 8080
 	router.Run(":8080")

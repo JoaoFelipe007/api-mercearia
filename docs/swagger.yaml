@@ -11,6 +11,32 @@ definitions:
       status:
         type: boolean
     type: object
+  model.Product:
+    properties:
+      categoryId:
+        type: integer
+      dateChange:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      price:
+        type: number
+      priority:
+        type: integer
+      quantity:
+        type: number
+      registrationDate:
+        type: string
+      status:
+        type: boolean
+    type: object
+  model.Response:
+    properties:
+      message:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -110,4 +136,43 @@ paths:
       summary: Change the status of a category
       tags:
       - Category
+  /product:
+    post:
+      description: Save a product
+      parameters:
+      - description: Dados do novo produto
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/model.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Product'
+        "400":
+          description: Erro de validação nos dados
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Save a product
+      tags:
+      - Product
+  /products:
+    get:
+      description: Returns all active products or not
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Product'
+            type: array
+      summary: list all products
+      tags:
+      - Product
 swagger: "2.0"
