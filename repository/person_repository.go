@@ -50,3 +50,31 @@ func (pr *PersonRepository) CreatePerson(person model.Person) (model.Person, err
 	query.Close()
 	return personResult, nil
 }
+
+func (pr *PersonRepository) GetPersonByEmail(email string) (model.Person, error) {
+	var personResult model.Person
+
+	query := "SELECT * FROM person WHERE email = $1"
+
+	err := pr.connection.QueryRow(query, email).Scan(
+		&personResult.ID,
+		&personResult.Name,
+		&personResult.Password,
+		&personResult.Email,
+		&personResult.Document,
+		&personResult.IsAPhysicalPerson,
+		&personResult.UserType,
+		&personResult.RegistrationDate,
+		&personResult.DateChange,
+	)
+	defer pr.connection.Close()
+	if err != nil {
+
+		if err == sql.ErrNoRows { //nenhuma liha encontrada
+			return model.Person{}, nil
+		}
+		return model.Person{}, err
+	}
+
+	return personResult, nil
+}
