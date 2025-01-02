@@ -60,6 +60,13 @@ definitions:
       message:
         type: string
     type: object
+  model.UserLogin:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
   model.UserType:
     enum:
     - 0
@@ -78,6 +85,34 @@ info:
   title: GROCERY API
   version: "1.0"
 paths:
+  /authorization:
+    post:
+      description: Generate token JWT
+      parameters:
+      - description: Dados para login
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserLogin'
+        "400":
+          description: Erro de validação nos dados
+          schema:
+            $ref: '#/definitions/model.Response'
+        "406":
+          description: Erro de validação nos dados
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: Generate token JWT
+      tags:
+      - Authorization
   /categories:
     get:
       description: Returns all categories available in the system.

@@ -46,6 +46,9 @@ func main() {
 	PersonUseCase := usecase.NewPersonUsecase(PersonRepository)
 	PersonController := controller.NewPersonController(PersonUseCase)
 
+	AutenticationUseCase := usecase.NewAutenticationUsecase(PersonRepository)
+	AutenticationController := controller.NewAutenticationControler(AutenticationUseCase)
+
 	// Definindo as rotas
 	router.GET("/categories", CategoryControler.GetCategories)
 	router.GET("/category/:id", CategoryControler.GetCategoryById)
@@ -60,6 +63,8 @@ func main() {
 	router.DELETE("/product/:id", ProductController.DeleteProduct)
 
 	router.POST("/person", PersonController.CreatePerson)
+
+	router.POST("/authorization", AutenticationController.Authorization)
 
 	// Rodando o servidor na porta 8080
 	router.Run(":8080")

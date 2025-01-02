@@ -67,14 +67,13 @@ func (pr *PersonRepository) GetPersonByEmail(email string) (model.Person, error)
 		&personResult.RegistrationDate,
 		&personResult.DateChange,
 	)
-	defer pr.connection.Close()
 	if err != nil {
 
-		if err == sql.ErrNoRows { //nenhuma liha encontrada
+		if err == sql.ErrNoRows {
 			return model.Person{}, nil
 		}
 		return model.Person{}, err
 	}
-
+	pr.connection.Close()
 	return personResult, nil
 }
