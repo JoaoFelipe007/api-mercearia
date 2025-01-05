@@ -9,15 +9,13 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {
-            "name": "João Felipe"
-        },
+        "contact": {},
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/authorization": {
+        "/auth/authorization": {
             "post": {
                 "description": "Generate token JWT",
                 "produces": [
@@ -60,8 +58,50 @@ const docTemplate = `{
                 }
             }
         },
-        "/categories": {
+        "/auth/register": {
+            "post": {
+                "description": "Save a person",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Save a person",
+                "parameters": [
+                    {
+                        "description": "Dados do novo usuario",
+                        "name": "category",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Person"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Person"
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação nos dados",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/categories/": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Returns all categories available in the system.",
                 "produces": [
                     "application/json"
@@ -85,6 +125,11 @@ const docTemplate = `{
         },
         "/category": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new category",
                 "produces": [
                     "application/json"
@@ -116,6 +161,11 @@ const docTemplate = `{
         },
         "/category/change-status/{id}": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Change the status of a category",
                 "produces": [
                     "application/json"
@@ -145,6 +195,11 @@ const docTemplate = `{
         },
         "/category/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Returns the specified category",
                 "produces": [
                     "application/json"
@@ -172,6 +227,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Deletes the specified category",
                 "produces": [
                     "application/json"
@@ -199,45 +259,13 @@ const docTemplate = `{
                 }
             }
         },
-        "/person": {
-            "post": {
-                "description": "Save a person",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Person"
-                ],
-                "summary": "Save a person",
-                "parameters": [
-                    {
-                        "description": "Dados do novo usuario",
-                        "name": "category",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.Person"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Person"
-                        }
-                    },
-                    "400": {
-                        "description": "Erro de validação nos dados",
-                        "schema": {
-                            "$ref": "#/definitions/model.Response"
-                        }
-                    }
-                }
-            }
-        },
         "/product": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Save a product",
                 "produces": [
                     "application/json"
@@ -273,6 +301,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Save a product",
                 "produces": [
                     "application/json"
@@ -310,6 +343,11 @@ const docTemplate = `{
         },
         "/product/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Returns the specified product",
                 "produces": [
                     "application/json"
@@ -343,6 +381,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Deletes the specified product",
                 "produces": [
                     "application/json"
@@ -372,6 +415,11 @@ const docTemplate = `{
         },
         "/products": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Returns all active products or not",
                 "produces": [
                     "application/json"
@@ -510,14 +558,21 @@ const docTemplate = `{
                 "Employee"
             ]
         }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
-	BasePath:         "/",
+	Host:             "",
+	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "GROCERY API",
 	Description:      "This is a RESTful API in Go using Swagger",

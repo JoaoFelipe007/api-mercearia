@@ -21,12 +21,12 @@ func NewPersonController(personUsecase usecase.PersonUsecase) PersonController {
 // CreatePerson godoc
 // @Summary Save a person
 // @Description Save a person
-// @Tags Person
+// @Tags Authorization
 // @Produce json
 // @Param category body model.Person true "Dados do novo usuario"
 // @Success 200 {object} model.Person
 // @Failure 400 {object} model.Response "Erro de validação nos dados"
-// @Router /person [post]
+// @Router /auth/register [post]
 func (pc *PersonController) CreatePerson(ctx *gin.Context) {
 	var person model.Person
 

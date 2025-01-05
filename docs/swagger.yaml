@@ -1,4 +1,3 @@
-basePath: /
 definitions:
   model.Category:
     properties:
@@ -77,15 +76,13 @@ definitions:
     - Admin
     - Manager
     - Employee
-host: localhost:8080
 info:
-  contact:
-    name: João Felipe
+  contact: {}
   description: This is a RESTful API in Go using Swagger
   title: GROCERY API
   version: "1.0"
 paths:
-  /authorization:
+  /auth/authorization:
     post:
       description: Generate token JWT
       parameters:
@@ -113,98 +110,7 @@ paths:
       summary: Generate token JWT
       tags:
       - Authorization
-  /categories:
-    get:
-      description: Returns all categories available in the system.
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/model.Category'
-            type: array
-      summary: List all categories
-      tags:
-      - Category
-  /category:
-    post:
-      description: Create a new category
-      parameters:
-      - description: Dados da nova categoria
-        in: body
-        name: category
-        required: true
-        schema:
-          $ref: '#/definitions/model.Category'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Category'
-      summary: Create a new category
-      tags:
-      - Category
-  /category/{id}:
-    delete:
-      description: Deletes the specified category
-      parameters:
-      - description: ID da Categoria
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Delatado com sucesso
-          schema:
-            type: string
-      summary: Delete a category
-      tags:
-      - Category
-    get:
-      description: Returns the specified category
-      parameters:
-      - description: ID of Category
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Category'
-      summary: List the category by id
-      tags:
-      - Category
-  /category/change-status/{id}:
-    put:
-      description: Change the status of a category
-      parameters:
-      - description: ID da Categoria
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Category'
-      summary: Change the status of a category
-      tags:
-      - Category
-  /person:
+  /auth/register:
     post:
       description: Save a person
       parameters:
@@ -227,7 +133,108 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: Save a person
       tags:
-      - Person
+      - Authorization
+  /categories/:
+    get:
+      description: Returns all categories available in the system.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Category'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: List all categories
+      tags:
+      - Category
+  /category:
+    post:
+      description: Create a new category
+      parameters:
+      - description: Dados da nova categoria
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/model.Category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Category'
+      security:
+      - BearerAuth: []
+      summary: Create a new category
+      tags:
+      - Category
+  /category/{id}:
+    delete:
+      description: Deletes the specified category
+      parameters:
+      - description: ID da Categoria
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delatado com sucesso
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Delete a category
+      tags:
+      - Category
+    get:
+      description: Returns the specified category
+      parameters:
+      - description: ID of Category
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Category'
+      security:
+      - BearerAuth: []
+      summary: List the category by id
+      tags:
+      - Category
+  /category/change-status/{id}:
+    put:
+      description: Change the status of a category
+      parameters:
+      - description: ID da Categoria
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Category'
+      security:
+      - BearerAuth: []
+      summary: Change the status of a category
+      tags:
+      - Category
   /product:
     post:
       description: Save a product
@@ -249,6 +256,8 @@ paths:
           description: Erro de validação nos dados
           schema:
             $ref: '#/definitions/model.Response'
+      security:
+      - BearerAuth: []
       summary: Save a product
       tags:
       - Product
@@ -272,6 +281,8 @@ paths:
           description: Erro de validação nos dados
           schema:
             $ref: '#/definitions/model.Response'
+      security:
+      - BearerAuth: []
       summary: Save a product
       tags:
       - Product
@@ -291,6 +302,8 @@ paths:
           description: Delatado com sucesso
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: Delete a product
       tags:
       - Product
@@ -313,6 +326,8 @@ paths:
           description: Erro de validação nos dados
           schema:
             $ref: '#/definitions/model.Response'
+      security:
+      - BearerAuth: []
       summary: list product by id
       tags:
       - Product
@@ -328,7 +343,14 @@ paths:
             items:
               $ref: '#/definitions/model.Product'
             type: array
+      security:
+      - BearerAuth: []
       summary: list all products
       tags:
       - Product
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

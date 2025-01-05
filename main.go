@@ -4,6 +4,7 @@ import (
 	"api-mercearia-go/controller"
 	"api-mercearia-go/db"
 	_ "api-mercearia-go/docs"
+	"api-mercearia-go/middleware"
 	"api-mercearia-go/repository"
 	"api-mercearia-go/usecase"
 
@@ -16,6 +17,9 @@ import (
 // @title GROCERY API
 // @version 1.0
 // @description This is a RESTful API in Go using Swagger
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 // @contact.name João Felipe
 // @joaofelipe.developer@gmail.com
 // @host localhost:8080
@@ -50,22 +54,41 @@ func main() {
 	AutenticationController := controller.NewAutenticationControler(AutenticationUseCase)
 
 	// Definindo as rotas
-	router.GET("/categories", CategoryControler.GetCategories)
-	router.GET("/category/:id", CategoryControler.GetCategoryById)
-	router.POST("/category", CategoryControler.CreateCategory)
-	router.DELETE("/category/:id", CategoryControler.DeleteCategory)
-	router.PUT("/category/change-status/:id", CategoryControler.ChangeStatus)
+	categoryRoutes := router.Group("/category")
+	categoryRoutes.Use(middleware.AuthenticationMiddleware())
+	{
+		categoryRoutes.GET("/:id", CategoryControler.GetCategoryById)
+		categoryRoutes.POST("/category", CategoryControler.CreateCategory)
+		categoryRoutes.DELETE("/:id", CategoryControler.DeleteCategory)
+		categoryRoutes.PUT("/change-status/:id", CategoryControler.ChangeStatus)
+	}
 
-	router.GET("/products", ProductController.GetProducts)
-	router.POST("/product", ProductController.CreateProduct)
-	router.GET("/product/:id", ProductController.GetProductById)
-	router.PUT("/product", ProductController.ChangeProduct)
-	router.DELETE("/product/:id", ProductController.DeleteProduct)
+	categoriesRoutes := router.Group("/categories")
+	categoriesRoutes.Use(middleware.AuthenticationMiddleware())
+	{
+		categoryRoutes.GET("/", CategoryControler.GetCategories)
+	}
 
-	router.POST("/person", PersonController.CreatePerson)
+	productRoutes := router.Group("/product")
+	productRoutes.Use(middleware.AuthenticationMiddleware())
+	{
+		productRoutes.POST("/", ProductController.CreateProduct)
+		productRoutes.GET("/:id", ProductController.GetProductById)
+		productRoutes.PUT("/", ProductController.ChangeProduct)
+		productRoutes.DELETE("/:id", ProductController.DeleteProduct)
 
-	router.POST("/authorization", AutenticationController.Authorization)
+	}
 
+	productsRoutes := router.Group("/products")
+	productsRoutes.Use(middleware.AuthenticationMiddleware())
+	{
+		productsRoutes.GET("/", ProductController.GetProducts)
+	}
+	authRoutes := router.Group("/auth")
+	{
+		authRoutes.POST("/register", PersonController.CreatePerson)
+		authRoutes.POST("/authorization", AutenticationController.Authorization)
+	}
 	// Rodando o servidor na porta 8080
 	router.Run(":8080")
 }

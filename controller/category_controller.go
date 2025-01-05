@@ -23,9 +23,10 @@ func NewCategoryControler(usecase usecase.CategoryUsecase) CategoryController {
 // @Summary List all categories
 // @Description Returns all categories available in the system.
 // @Tags Category
+// @Security BearerAuth
 // @Produce json
 // @Success 200 {array} model.Category
-// @Router /categories [get]
+// @Router /categories/ [get]
 func (c *CategoryController) GetCategories(ctx *gin.Context) {
 
 	categories, err := c.categoryUsecase.GetCategories()
@@ -40,6 +41,7 @@ func (c *CategoryController) GetCategories(ctx *gin.Context) {
 // @Summary List the category by id
 // @Description Returns the specified category
 // @Tags Category
+// @Security BearerAuth
 // @Produce json
 // @Param id path int true "ID of Category"
 // @Success 200 {object} model.Category
@@ -72,6 +74,7 @@ func (c *CategoryController) GetCategoryById(ctx *gin.Context) {
 // @Summary Create a new category
 // @Description Create a new category
 // @Tags Category
+// @Security BearerAuth
 // @Produce json
 // @Param category body model.Category true "Dados da nova categoria"
 // @Success 200 {object} model.Category
@@ -99,6 +102,7 @@ func (c *CategoryController) CreateCategory(ctx *gin.Context) {
 // @Summary Change the status of a category
 // @Description Change the status of a category
 // @Tags Category
+// @Security BearerAuth
 // @Produce json
 // @Param id path int true "ID da Categoria"
 // @Success 200 {object} model.Category
@@ -132,6 +136,7 @@ func (c *CategoryController) ChangeStatus(ctx *gin.Context) {
 // @Summary Delete a category
 // @Description Deletes the specified category
 // @Tags Category
+// @Security BearerAuth
 // @Produce json
 // @Param id path int true "ID da Categoria"
 // @Success 200 {string} string "Delatado com sucesso"

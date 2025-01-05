@@ -51,7 +51,7 @@ func (lu *AutenticationUsecase) Login(userLogin model.UserLogin) (string, error)
 func generateToken(person model.Person) (string, error) {
 
 	clains := jwt.MapClaims{
-		"id":       person.ID,
+		"userID":   person.ID,
 		"name":     person.Name,
 		"userType": person.UserType,
 		"email":    person.Email,
@@ -64,4 +64,27 @@ func generateToken(person model.Person) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
+}
+
+func VerifyToken(tokenString string) (jwt.MapClaims, error) {
+
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+
+		// Verifique o método de assinatura
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Invalid signature method")
+		}
+
+		return []byte(JWT_SECRET_KEY), nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		return claims, nil
+	}
+
+	return nil, fmt.Errorf("Valid Token")
 }

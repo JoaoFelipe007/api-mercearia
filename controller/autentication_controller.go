@@ -28,7 +28,7 @@ func NewAutenticationControler(usecase usecase.AutenticationUsecase) Autenticati
 // @Success 200 {object} model.UserLogin
 // @Failure 400 {object} model.Response "Erro de validação nos dados"
 // @Failure 406 {object} model.Response "Erro de validação nos dados"
-// @Router /authorization [post]
+// @Router /auth/authorization [post]
 func (ac *AutenticationController) Authorization(ctx *gin.Context) {
 	var userLogin model.UserLogin
 
@@ -56,6 +56,5 @@ func (ac *AutenticationController) Authorization(ctx *gin.Context) {
 		return
 	}
 
-	ctx.Header("Authorization", token)
-	ctx.JSON(http.StatusOK, token)
+	ctx.JSON(http.StatusOK, gin.H{"accessToken": token})
 }

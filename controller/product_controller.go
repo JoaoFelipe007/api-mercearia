@@ -24,6 +24,7 @@ func NewProductController(productUsecase usecase.ProductUsecase) ProductControll
 // @Summary list all products
 // @Description Returns all active products or not
 // @Tags Product
+// @Security BearerAuth
 // @Produce json
 // @Success 200 {array} model.Product
 // @Router /products [get]
@@ -41,6 +42,7 @@ func (pc *ProductController) GetProducts(ctx *gin.Context) {
 // @Summary list product by id
 // @Description Returns the specified product
 // @Tags Product
+// @Security BearerAuth
 // @Produce json
 // @Param id path int true "ID of Product"
 // @Success 200 {object} model.Product
@@ -76,6 +78,7 @@ func (pc *ProductController) GetProductById(ctx *gin.Context) {
 // @Summary Save a product
 // @Description Save a product
 // @Tags Product
+// @Security BearerAuth
 // @Produce json
 // @Param category body model.Product true "Dados do novo produto"
 // @Success 200 {object} model.Product
@@ -125,6 +128,7 @@ func (pc *ProductController) CreateProduct(ctx *gin.Context) {
 // @Summary Save a product
 // @Description Save a product
 // @Tags Product
+// @Security BearerAuth
 // @Produce json
 // @Param category body model.Product true "Dados do produto existente"
 // @Success 200 {object} model.Product
@@ -180,6 +184,7 @@ func (pc *ProductController) ChangeProduct(ctx *gin.Context) {
 // @Summary Delete a product
 // @Description Deletes the specified product
 // @Tags Product
+// @Security BearerAuth
 // @Produce json
 // @Param id path int true "ID of product"
 // @Success 200 {string} string "Delatado com sucesso"
