@@ -26,7 +26,7 @@ func NewCategoryControler(usecase usecase.CategoryUsecase) CategoryController {
 // @Security BearerAuth
 // @Produce json
 // @Success 200 {array} model.Category
-// @Router /categories/ [get]
+// @Router /categories [get]
 func (c *CategoryController) GetCategories(ctx *gin.Context) {
 
 	categories, err := c.categoryUsecase.GetCategories()

@@ -95,7 +95,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/categories/": {
+        "/categories": {
             "get": {
                 "security": [
                     {

@@ -51,7 +51,6 @@ func (pr *ProductRepository) GetProducts() ([]model.Product, error) {
 		productList = append(productList, productObj)
 	}
 
-	rows.Close()
 	return productList, err
 }
 
@@ -81,7 +80,6 @@ func (pr *ProductRepository) CreateProduct(product model.Product) (model.Product
 		return model.Product{}, err
 	}
 
-	query.Close()
 	return productResult, err
 }
 
@@ -101,7 +99,6 @@ func (pr *ProductRepository) GetProductById(id int) (model.Product, error) {
 		&product.RegistrationDate,
 		&product.DateChange,
 	)
-	defer pr.connection.Close()
 	if err != nil {
 
 		if err == sql.ErrNoRows { //nenhuma liha encontrada
@@ -150,7 +147,6 @@ func (pr *ProductRepository) ChangeProduct(product model.Product) (model.Product
 		return model.Product{}, err
 	}
 
-	query.Close()
 	return productResult, nil
 
 }
@@ -181,7 +177,6 @@ func (cr *ProductRepository) DeleteProduct(id int) (string, error) {
 	if rowsAffected == 0 {
 		return "", fmt.Errorf("nenhuma linha foi deletada")
 	}
-	query.Close()
 
 	return "Delatado com sucesso", nil
 }

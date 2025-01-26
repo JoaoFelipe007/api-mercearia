@@ -87,7 +87,7 @@
                 }
             }
         },
-        "/categories/": {
+        "/categories": {
             "get": {
                 "security": [
                     {

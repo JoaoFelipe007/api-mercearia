@@ -36,6 +36,7 @@ func main() {
 	if err != nil {
 		panic(err) // Caso haja erro, o servidor falha e retorna o erro
 	}
+	defer dbConnection.Close() // Feche o banco ao final da execução da aplicação
 
 	// Criando instâncias dos pacotes da camada de repositório, usecase e controller
 	CategoryRepository := repository.NewCategoryRepository(dbConnection)

@@ -43,19 +43,18 @@ func (pr *CategoryRepository) GetCategories() ([]model.Category, error) { // O q
 
 		categoryList = append(categoryList, categoryObj)
 	}
-	rows.Close()
 
 	return categoryList, err
 }
 
 func (cr *CategoryRepository) GetCategoryById(id int) (model.Category, error) {
 	query := "SELECT * FROM category WHERE id = $1"
+
 	db := cr.connection
-	defer db.Close() // Garante que a conexão será fechada ao final da função
 
 	var category model.Category
 
-	err := db.QueryRow(query, id).Scan(&category.ID, &category.Description, &category.Priority)
+	err := db.QueryRow(query, id).Scan(&category.ID, &category.Description, &category.Priority, &category.Status)
 
 	if err != nil {
 		if err == sql.ErrNoRows { //nenhuma liha encontrada
@@ -86,7 +85,6 @@ func (cr *CategoryRepository) CreateCategory(category model.Category) (model.Cat
 		return model.Category{}, err
 	}
 
-	query.Close()
 	return categoryResult, nil
 }
 
@@ -108,7 +106,6 @@ func (cr *CategoryRepository) ChangeStatus(id int) (model.Category, error) {
 		return model.Category{}, err
 	}
 
-	query.Close()
 	return category, nil
 
 }
@@ -139,7 +136,6 @@ func (cr *CategoryRepository) DeleteCategoty(id int) (string, error) {
 	if rowsAffected == 0 {
 		return "", fmt.Errorf("nenhuma linha foi deletada")
 	}
-	query.Close()
 
 	return "Delatado com sucesso", nil
 }

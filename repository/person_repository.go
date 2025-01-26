@@ -47,7 +47,6 @@ func (pr *PersonRepository) CreatePerson(person model.Person) (model.Person, err
 		return model.Person{}, err
 	}
 
-	query.Close()
 	return personResult, nil
 }
 
@@ -74,6 +73,5 @@ func (pr *PersonRepository) GetPersonByEmail(email string) (model.Person, error)
 		}
 		return model.Person{}, err
 	}
-	pr.connection.Close()
 	return personResult, nil
 }
