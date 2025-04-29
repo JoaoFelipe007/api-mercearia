@@ -11,7 +11,7 @@ Esta API foi desenvolvida utilizando o framework **Gin** e conta com um banco de
 - **Swagger**: Documentação da API.
 - **JWT**: Autenticação de usuários com tokens seguros. 🔐
 
-## 🌟 Objetivo
+## 🌟 Objetivo 😊
 
 Este projeto foi criado com o propósito de estudo e aprendizado. Não deve ser utilizado em produção. Ele serve como base para explorar conceitos como:
 
